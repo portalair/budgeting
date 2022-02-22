@@ -1,27 +1,13 @@
 import React from "react";
 import Transaction from "../model/Transaction";
-import {Paper, TableContainer, TableHead, Table, TableCell, Button, TableBody, TableRow, Tab} from "@mui/material";
+import {Paper, TableContainer, TableHead, Table, TableCell, TableBody, TableRow} from "@mui/material";
 
-class TransactionsTable extends React.Component {
-    mockData = [
-        this.createTransaction(new Date(2022,2,2), 'mtg', 45.5),
-        this.createTransaction(new Date(2022,2,3), 'groceries', 43.87),
-        this.createTransaction(new Date(2022,2,7), 'gas', 23.39),
-        this.createTransaction(new Date(2022,2,10), 'books', 359.87)
-    ];
-
-    createTransaction(date:Date, description:string, amount:number): Transaction {
-        return {
-            date: date,
-            description: description,
-            amount: amount
-        }
-    }
-
+class TransactionsTable extends React.Component<any> {
 
     render() {
+        const transactions = this.props.transactions;
         return (
-            <TableContainer component={Paper}>
+            <TableContainer sx={{width: 1}} component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
@@ -31,7 +17,7 @@ class TransactionsTable extends React.Component {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {this.mockData.map((row) => (
+                        {transactions.map((row: Transaction) => (
                             <TableRow
                             key={row.description}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
