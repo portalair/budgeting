@@ -7,17 +7,30 @@ import {Moment} from "moment";
 import Transaction from "../model/Transaction";
 
 
+// interface SidebarState {
+//     transactionType: TransactionType,
+//     date: Date,
+//     description: string,
+//     amount: number
+// }
+
+enum TransactionType {
+    TRANSACTION='transaction',
+    RECURRING='recurring'
+}
 
 class Sidebar extends React.Component<any> {
-    value: any;
-    selectValue: any;
+        transactionType: any;
+        date: any;
+        description: any;
+        amount: any;
 
     render() {
         return (
             <Box sx={{display: 'flex',flexDirection: 'column'}}>
-                <Select label="Mode" value={this.selectValue} onChange={this.handleChange}>
-                    <MenuItem value={'transaction'}>Transaction</MenuItem>
-                    <MenuItem value={'recurring'}>Recurring</MenuItem>
+                <Select label="Mode" value={this.transactionType} onChange={this.handleChange}>
+                    <MenuItem value={TransactionType.TRANSACTION}>Transaction</MenuItem>
+                    <MenuItem value={TransactionType.RECURRING}>Recurring</MenuItem>
                 </Select>
                 {/*<LocalizationProvider dateAdapter={DateAdapter}>*/}
                 {/*    <DatePicker*/}
@@ -34,11 +47,6 @@ class Sidebar extends React.Component<any> {
                 <Button variant="outlined">submit</Button>
             </Box>
         );
-    }
-
-    private setValue(newValue: Moment | null) {
-        console.log(newValue);
-        this.value = newValue;
     }
 
     private handleChange() {
