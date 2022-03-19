@@ -39,15 +39,16 @@ class App extends React.Component<any, TransactionAppState> {
                   display: 'grid',
                   gridTemplateColumns: 'repeat(5, 1fr)',
                   gap: 1,
-                  gridTemplateRows: 'auto'
+                  gridTemplateRows: 'auto',
+                  gridTemplateAreas: '"graph graph graph sidebar sidebar""table table table table table"'
               }}>
-                  <Box sx={{gridColumn: '1 / 4', gridRow: '1 / 4', width: '1', height: '1'}} className="graph">
+                  <Box sx={{gridArea: 'graph'}} className="graph">
                       <ChartVis/>
                   </Box>
-                  <Box sx={{gridColumn: '4 / 6', gridRow:'1 / 4'}} className="add">
+                  <Box sx={{gridArea: 'sidebar'}} className="add">
                     <Sidebar/>
                   </Box>
-                  <Box sx={{gridRow: '4 / 6', gridColumn: '1 / 6'}} className="table">
+                  <Box sx={{gridArea: 'table'}} className="table">
                       <TransactionsTable transactions={transactions}/>
                   </Box>
               </Box>
