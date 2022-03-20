@@ -41,12 +41,10 @@ class Sidebar extends React.Component<any, Transaction> {
                         label="Date"
                         value={this.state.date}
                         onChange={(newValue) => {this.setState({date: newValue || new Date()})}}
-                        renderInput={(params) => <TextField {...params} />}>
-
-                    </DatePicker>
+                        renderInput={(params) => <TextField {...params} />}/>
                 </LocalizationProvider>
-                <TextField sx={{marginTop: '10px', marginBottom: '5px'}} id="description" value={this.state.description} variant="outlined"></TextField>
-                <TextField sx={{marginTop: '5px', marginBottom: '5px'}} id="amount" value={this.state.amount} variant="outlined"></TextField>
+                <TextField sx={{marginTop: '10px', marginBottom: '5px'}} id="description" value={this.state.description} variant="outlined"/>
+                <TextField sx={{marginTop: '5px', marginBottom: '5px'}} id="amount" value={this.state.amount} variant="outlined"/>
                 <Button variant="outlined" onClick={() => {this.onSubmit(this.state)}}>submit</Button>
             </Box>
         );
