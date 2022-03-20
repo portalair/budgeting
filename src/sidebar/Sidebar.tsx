@@ -5,6 +5,7 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import {DatePicker} from "@mui/lab";
 import Transaction from "../model/Transaction";
 import {TransactionType} from "../model/TransactionType";
+import dayjs from "dayjs";
 
 
 // interface SidebarState {
@@ -22,7 +23,7 @@ class Sidebar extends React.Component<any, Transaction> {
         super(props);
         this.state = {
             transactionType: TransactionType.TRANSACTION,
-            date: new Date(),
+            date: dayjs(),
             description: 'mock',
             amount: 5.12
         };
@@ -40,7 +41,7 @@ class Sidebar extends React.Component<any, Transaction> {
                     <DatePicker
                         label="Date"
                         value={this.state.date}
-                        onChange={(newValue) => {this.setState({date: newValue || new Date()})}}
+                        onChange={(newValue) => {this.setState({date: newValue || dayjs()})}}
                         renderInput={(params) => <TextField {...params} />}/>
                 </LocalizationProvider>
                 <TextField sx={{marginTop: '10px', marginBottom: '5px'}} id="description" value={this.state.description} variant="outlined"/>
@@ -58,7 +59,7 @@ class Sidebar extends React.Component<any, Transaction> {
 
 
     private onSubmit(state: any) {
-        console.log(this.props);
+        console.log(state);
         this.props.parentCallback(this.props.createTransaction(state.date, state.description, state.amount));
     }
 }

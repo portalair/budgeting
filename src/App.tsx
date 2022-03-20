@@ -7,26 +7,23 @@ import Transaction from "./model/Transaction";
 import Sidebar from "./sidebar/Sidebar";
 import {TransactionAppState} from "./model/TransactionAppState";
 import {TransactionType} from "./model/TransactionType";
+import dayjs from "dayjs";
 
 class App extends React.Component<any, TransactionAppState> {
 
 
     constructor(props: any) {
         super(props);
+        const savedTransactions = localStorage.transactions ?  JSON.parse(localStorage.transactions) : []
+        savedTransactions.forEach((transaction: Transaction) => {
+            transaction.date = dayjs(transaction.date);
+        });
         this.state = {
-            transactions: [
-                this.createTransaction(new Date(2022,2,2), 'mtg', 45.5),
-                this.createTransaction(new Date(2022,2,3), 'groceries', 43.87),
-                this.createTransaction(new Date(2022,2,7), 'gas', 23.39),
-                this.createTransaction(new Date(2022,2,10), 'books', 359.87),
-                this.createTransaction(new Date(2022,2,10), 'water', 65.87),
-                this.createTransaction(new Date(2022,2,13), 'food', 25.87),
-                this.createTransaction(new Date(2022,2,17), 'videos', 16.23)
-            ]
+            transactions: savedTransactions
         };
     }
 
-    createTransaction(date:Date, description:string, amount:number): Transaction {
+    createTransaction(date:dayjs.Dayjs, description:string, amount:number): Transaction {
         return {
             transactionType: TransactionType.TRANSACTION,
             date: date,
@@ -38,8 +35,9 @@ class App extends React.Component<any, TransactionAppState> {
     callback = (transaction: Transaction) => {
         const transactions = this.state.transactions;
         transactions.push(transaction)
+        localStorage.setItem('transactions', JSON.stringify(transactions));
         this.setState({transactions: transactions});
-        console.log(this.state);
+        console.log(localStorage);
     }
 
     render() {

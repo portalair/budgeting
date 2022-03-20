@@ -21,7 +21,7 @@ class TransactionsTable extends React.Component<any> {
                             <TableRow
                             key={row.description}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                <TableCell component="th" scope="row">{row.date.toDateString()}</TableCell>
+                                <TableCell component="th" scope="row">{row.date.format('MM-DD-YYYY')}</TableCell>
                                 <TableCell>{row.description}</TableCell>
                                 <TableCell>{row.amount}</TableCell>
                             </TableRow>
