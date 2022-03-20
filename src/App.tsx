@@ -35,6 +35,13 @@ class App extends React.Component<any, TransactionAppState> {
         }
     }
 
+    callback = (transaction: Transaction) => {
+        const transactions = this.state.transactions;
+        transactions.push(transaction)
+        this.setState({transactions: transactions});
+        console.log(this.state);
+    }
+
     render() {
         const transactions = this.state.transactions;
       return (
@@ -50,7 +57,10 @@ class App extends React.Component<any, TransactionAppState> {
                       <ChartVis/>
                   </Box>
                   <Box sx={{gridArea: 'sidebar'}} className="add">
-                    <Sidebar/>
+                    <Sidebar
+                        parentCallback={this.callback}
+                        createTransaction={this.createTransaction}
+                        state={this.state}/>
                   </Box>
                   <Box sx={{gridArea: 'table'}} className="table">
                       <TransactionsTable transactions={transactions}/>
@@ -64,6 +74,8 @@ class App extends React.Component<any, TransactionAppState> {
           </div>
       )
   }
+
+
 }
 
 export default App;

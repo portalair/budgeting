@@ -56,16 +56,10 @@ class Sidebar extends React.Component<any, Transaction> {
         });
     }
 
-    // createTransaction(date:Date, description:string, amount:number): Transaction {
-    //     return {
-    //         transactionType: TransactionType.TRANSACTION,
-    //         date: date,
-    //         description: description,
-    //         amount: amount
-    //     }
-    // }
+
     private onSubmit(state: any) {
-        console.log(state);
+        console.log(this.props);
+        this.props.parentCallback(this.props.createTransaction(state.date, state.description, state.amount));
     }
 }
 
