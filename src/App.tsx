@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.css';
-import dancin from "./dancin/dancin";
 import TransactionsTable from "./table/TransactionsTable";
 import ChartVis from "./chart-vis/ChartVis";
 import {Box} from "@mui/material";
 import Transaction from "./model/Transaction";
 import Sidebar from "./sidebar/Sidebar";
 import {TransactionAppState} from "./model/TransactionAppState";
+import {TransactionType} from "./model/TransactionType";
 
 class App extends React.Component<any, TransactionAppState> {
 
@@ -18,13 +18,17 @@ class App extends React.Component<any, TransactionAppState> {
                 this.createTransaction(new Date(2022,2,2), 'mtg', 45.5),
                 this.createTransaction(new Date(2022,2,3), 'groceries', 43.87),
                 this.createTransaction(new Date(2022,2,7), 'gas', 23.39),
-                this.createTransaction(new Date(2022,2,10), 'books', 359.87)
+                this.createTransaction(new Date(2022,2,10), 'books', 359.87),
+                this.createTransaction(new Date(2022,2,10), 'water', 65.87),
+                this.createTransaction(new Date(2022,2,13), 'food', 25.87),
+                this.createTransaction(new Date(2022,2,17), 'videos', 16.23)
             ]
         };
     }
 
     createTransaction(date:Date, description:string, amount:number): Transaction {
         return {
+            transactionType: TransactionType.TRANSACTION,
             date: date,
             description: description,
             amount: amount
