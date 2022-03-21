@@ -1,5 +1,15 @@
 import React from "react";
-import {Box, Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField} from "@mui/material";
+import {
+    Box,
+    Button,
+    FormControl, InputAdornment,
+    InputLabel,
+    MenuItem,
+    OutlinedInput,
+    Select,
+    SelectChangeEvent,
+    TextField
+} from "@mui/material";
 import DateAdapter from '@mui/lab/AdapterMoment';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import {DatePicker} from "@mui/lab";
@@ -59,7 +69,18 @@ class Sidebar extends React.Component<any, Transaction> {
                         onChange={(newValue) => {this.setState({date: newValue || dayjs()})}}
                         renderInput={(params) => <TextField {...params} />}/>
                 </LocalizationProvider>
-                <TextField sx={{marginTop: '10px', marginBottom: '5px'}} id="description" value={this.state.description} variant="outlined"/>
+                <FormControl sx={{marginTop: '10px', marginBottom: '5px'}}>
+                    <InputLabel htmlFor="description">description</InputLabel>
+                    <OutlinedInput
+                        id="description"
+                        label="description"
+                        // startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                        value={this.state.description}
+                        onChange={(event => {
+                            this.setState({description: event.target.value});
+                        })}
+                    />
+                </FormControl>
                 <TextField sx={{marginTop: '5px', marginBottom: '5px'}} id="amount" value={this.state.amount} variant="outlined"/>
                 <Button variant="outlined" onClick={() => {this.onSubmit(this.state)}}>submit</Button>
             </Box>
