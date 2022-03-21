@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import './dancin/dancin.css'
 import TransactionsTable from "./table/TransactionsTable";
 import ChartVis from "./chart-vis/ChartVis";
 import {Box} from "@mui/material";
@@ -11,7 +12,7 @@ import dayjs from "dayjs";
 import dancin from "./dancin/dancin";
 
 class App extends React.Component<any, TransactionAppState> {
-
+    private timeToSmug = false;
 
     constructor(props: any) {
         super(props);
@@ -41,16 +42,19 @@ class App extends React.Component<any, TransactionAppState> {
         console.log(localStorage);
     }
 
+
+
     render() {
         const transactions = this.state.transactions;
       return (
           <div className="App">
-              <Box sx={{
+              <Box id="container" className="appContainer" sx={{
                   display: 'grid',
                   gridTemplateColumns: 'repeat(5, 1fr)',
                   gap: 1,
                   gridTemplateRows: 'auto',
                   gridTemplateAreas: '"graph graph graph sidebar sidebar""table table table table table"'
+
               }}>
                   <Box sx={{gridArea: 'graph'}} className="graph">
                       <ChartVis/>
@@ -59,7 +63,13 @@ class App extends React.Component<any, TransactionAppState> {
                     <Sidebar
                         parentCallback={this.callback}
                         createTransaction={this.createTransaction}
-                        state={this.state}/>
+                        smugexe={() => {
+                            // @ts-ignore
+                            document.getElementById("container").classList.add('danceOut');
+                            // @ts-ignore
+                            document.getElementById("smug").classList.add('dancin');
+                        }}
+                        />
                   </Box>
                   <Box sx={{gridArea: 'table'}} className="table">
                       <TransactionsTable transactions={transactions}/>
@@ -67,12 +77,18 @@ class App extends React.Component<any, TransactionAppState> {
               </Box>
 
 
-              <header>
-                  {/*{dancin()}*/}
-              </header>
+              <div id="smug" className="smug">
+                  {dancin()}
+              </div>
           </div>
       )
   }
+
+    smugexe() {
+        console.log();
+        // @ts-ignore
+    }
+
 
 
 }

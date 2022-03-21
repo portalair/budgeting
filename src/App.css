@@ -2,6 +2,13 @@
   text-align: center;
 }
 
+.appContainer {
+  z-index: 10;
+  position: relative;
+  background: white;
+  height: 100%;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

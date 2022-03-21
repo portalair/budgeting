@@ -103,6 +103,7 @@ class Sidebar extends React.Component<any, Transaction> {
         console.log(state);
         if(state.description === 'smug.exe') {
             console.log('execute smug.exe')
+            this.props.smugexe();
         } else {
             this.props.parentCallback(this.props.createTransaction(state.date, state.description, state.amount));
         }

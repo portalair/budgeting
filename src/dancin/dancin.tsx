@@ -4,13 +4,13 @@ const smugDance = "https://thumbs.gfycat.com/NimbleOptimisticHyracotherium-size_
 
 function dancin() {
     return (
-        <div className="dancin">
-            <header className="crt">
+        <div>
+            <div className="crt">
                 <img src={smugDance}/>
                 <p>
                     plz hire me :)
                 </p>
-            </header>
+            </div>
         </div>
     )
 }
