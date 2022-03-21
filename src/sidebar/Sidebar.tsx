@@ -1,5 +1,5 @@
 import React from "react";
-import {Box, Button, MenuItem, Select, TextField} from "@mui/material";
+import {Box, Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField} from "@mui/material";
 import DateAdapter from '@mui/lab/AdapterMoment';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import {DatePicker} from "@mui/lab";
@@ -18,25 +18,40 @@ import dayjs from "dayjs";
 class Sidebar extends React.Component<any, Transaction> {
 
 
-
     constructor(props: any) {
         super(props);
         this.state = {
             transactionType: TransactionType.TRANSACTION,
-            date: dayjs(),
-            description: 'mock',
-            amount: 5.12
+            date: dayjs().startOf('day'),
+            description: '',
+            amount: 0
         };
     }
 
     render() {
         return (
-            <Box sx={{display: 'flex',flexDirection: 'column'}}>
-
-                <Select sx={{marginTop: '5px', marginBottom: '10px'}} label="Mode" value={this.state.transactionType} onChange={(newValue) => {this.handleChange(newValue)}}>
-                    <MenuItem value={TransactionType.TRANSACTION}>Transaction</MenuItem>
-                    <MenuItem value={TransactionType.RECURRING}>Recurring</MenuItem>
-                </Select>
+            <Box sx={{display: 'flex',flexDirection: 'column', paddingLeft: '10px', paddingRight: '10px'}}>
+                {JSON.stringify(this.state)}
+                <label>New Transaction</label>
+                <FormControl sx={{marginTop: '5px', marginBottom: '10px'}} >
+                    <InputLabel id="transaction-select-label">Transaction type</InputLabel>
+                    <Select
+                        labelId="transaction-select-label"
+                        id="transaction-select"
+                        name="transaction type"
+                        label="Transaction type"
+                        defaultValue={TransactionType.TRANSACTION}
+                        onChange={
+                            (event: SelectChangeEvent) => {
+                                this.setState({
+                                transactionType: event.target.value as TransactionType
+                            });
+                        }}
+                    >
+                        <MenuItem value={TransactionType.TRANSACTION}>Transaction</MenuItem>
+                        <MenuItem value={TransactionType.RECURRING}>Recurring</MenuItem>
+                    </Select>
+                </FormControl>
                 <LocalizationProvider dateAdapter={DateAdapter}>
                     <DatePicker
                         label="Date"
@@ -50,13 +65,6 @@ class Sidebar extends React.Component<any, Transaction> {
             </Box>
         );
     }
-
-    private handleChange(newValue: any) {
-        this.setState({
-            transactionType:  newValue.target.value
-        });
-    }
-
 
     private onSubmit(state: any) {
         console.log(state);
