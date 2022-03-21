@@ -5,5 +5,5 @@ export default interface Transaction {
     transactionType: TransactionType,
     date: dayjs.Dayjs,
     description: string,
-    amount: number,
+    amount: string,
 }

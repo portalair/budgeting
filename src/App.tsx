@@ -8,6 +8,7 @@ import Sidebar from "./sidebar/Sidebar";
 import {TransactionAppState} from "./model/TransactionAppState";
 import {TransactionType} from "./model/TransactionType";
 import dayjs from "dayjs";
+import dancin from "./dancin/dancin";
 
 class App extends React.Component<any, TransactionAppState> {
 
@@ -23,7 +24,7 @@ class App extends React.Component<any, TransactionAppState> {
         };
     }
 
-    createTransaction(date:dayjs.Dayjs, description:string, amount:number): Transaction {
+    createTransaction(date:dayjs.Dayjs, description:string, amount:string): Transaction {
         return {
             transactionType: TransactionType.TRANSACTION,
             date: date,

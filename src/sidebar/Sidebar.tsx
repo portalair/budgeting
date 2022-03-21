@@ -34,14 +34,13 @@ class Sidebar extends React.Component<any, Transaction> {
             transactionType: TransactionType.TRANSACTION,
             date: dayjs().startOf('day'),
             description: '',
-            amount: 0
+            amount: ''
         };
     }
 
     render() {
         return (
             <Box sx={{display: 'flex',flexDirection: 'column', paddingLeft: '10px', paddingRight: '10px'}}>
-                {JSON.stringify(this.state)}
                 <label>New Transaction</label>
                 <FormControl sx={{marginTop: '5px', marginBottom: '10px'}} >
                     <InputLabel id="transaction-select-label">Transaction type</InputLabel>
@@ -81,15 +80,33 @@ class Sidebar extends React.Component<any, Transaction> {
                         })}
                     />
                 </FormControl>
-                <TextField sx={{marginTop: '5px', marginBottom: '5px'}} id="amount" value={this.state.amount} variant="outlined"/>
+                <FormControl sx={{marginTop: '5px', marginBottom: '5px'}}>
+                    <InputLabel htmlFor="amount">amount</InputLabel>
+                    <OutlinedInput
+                        id="amount"
+                        label="amount"
+                        startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                        value={this.state.amount}
+                        onChange={(event => {
+                            this.setState({amount:event.target.value});
+                        })}
+                        inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                    />
+                </FormControl>
                 <Button variant="outlined" onClick={() => {this.onSubmit(this.state)}}>submit</Button>
+                {JSON.stringify(this.state)}
             </Box>
         );
     }
 
     private onSubmit(state: any) {
         console.log(state);
-        this.props.parentCallback(this.props.createTransaction(state.date, state.description, state.amount));
+        if(state.description === 'smug.exe') {
+            console.log('execute smug.exe')
+        } else {
+            this.props.parentCallback(this.props.createTransaction(state.date, state.description, state.amount));
+        }
+        //this.wipeFields()
     }
 }
 
