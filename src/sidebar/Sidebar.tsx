@@ -28,15 +28,12 @@ import dayjs from "dayjs";
 class Sidebar extends React.Component<any, Transaction> {
 
 
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            transactionType: TransactionType.TRANSACTION,
-            date: dayjs().startOf('day'),
-            description: '',
-            amount: ''
-        };
-    }
+    state = {
+        transactionType: TransactionType.TRANSACTION,
+        date: dayjs().startOf('day'),
+        description: '',
+        amount: ''
+    };
 
     render() {
         return (
@@ -106,8 +103,8 @@ class Sidebar extends React.Component<any, Transaction> {
             this.props.smugexe();
         } else {
             this.props.parentCallback(this.props.createTransaction(state.date, state.description, state.amount));
+            this.setState({description: '', amount: ''})
         }
-        //this.wipeFields()
     }
 }
 
