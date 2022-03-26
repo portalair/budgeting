@@ -5,7 +5,7 @@ import {
     FormControl, InputAdornment,
     InputLabel,
     MenuItem,
-    OutlinedInput,
+    OutlinedInput, Paper,
     Select,
     SelectChangeEvent,
     TextField
@@ -36,62 +36,65 @@ class Sidebar extends React.Component<any, Transaction> {
     };
 
     render() {
+        const date = this.state.date;
         return (
-            <Box sx={{display: 'flex',flexDirection: 'column', paddingLeft: '10px', paddingRight: '10px'}}>
-                <label>New Transaction</label>
-                <FormControl sx={{marginTop: '5px', marginBottom: '10px'}} >
-                    <InputLabel id="transaction-select-label">Transaction type</InputLabel>
-                    <Select
-                        labelId="transaction-select-label"
-                        id="transaction-select"
-                        name="transaction type"
-                        label="Transaction type"
-                        defaultValue={TransactionType.TRANSACTION}
-                        onChange={
-                            (event: SelectChangeEvent) => {
-                                this.setState({
-                                transactionType: event.target.value as TransactionType
-                            });
-                        }}
-                    >
-                        <MenuItem value={TransactionType.TRANSACTION}>Transaction</MenuItem>
-                        <MenuItem value={TransactionType.RECURRING}>Recurring</MenuItem>
-                    </Select>
-                </FormControl>
-                <LocalizationProvider dateAdapter={DateAdapter}>
-                    <DatePicker
-                        label="Date"
-                        value={this.state.date}
-                        onChange={(newValue) => {this.setState({date: newValue || dayjs()})}}
-                        renderInput={(params) => <TextField {...params} />}/>
-                </LocalizationProvider>
-                <FormControl sx={{marginTop: '10px', marginBottom: '5px'}}>
-                    <InputLabel htmlFor="description">description</InputLabel>
-                    <OutlinedInput
-                        id="description"
-                        label="description"
-                        // startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                        value={this.state.description}
-                        onChange={(event => {
-                            this.setState({description: event.target.value});
-                        })}
-                    />
-                </FormControl>
-                <FormControl sx={{marginTop: '5px', marginBottom: '5px'}}>
-                    <InputLabel htmlFor="amount">amount</InputLabel>
-                    <OutlinedInput
-                        id="amount"
-                        label="amount"
-                        startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                        value={this.state.amount}
-                        onChange={(event => {
-                            this.setState({amount:event.target.value});
-                        })}
-                        inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                    />
-                </FormControl>
-                <Button variant="outlined" onClick={() => {this.onSubmit(this.state)}}>submit</Button>
-                {JSON.stringify(this.state)}
+            <Box>
+                <Paper sx={{display: 'flex',flexDirection: 'column', p: 3, height: '100%'}}>
+                    <label>New Transaction</label>
+                    <FormControl sx={{marginTop: '5px', marginBottom: '10px'}} >
+                        <InputLabel id="transaction-select-label">Transaction type</InputLabel>
+                        <Select
+                            labelId="transaction-select-label"
+                            id="transaction-select"
+                            name="transaction type"
+                            label="Transaction type"
+                            defaultValue={TransactionType.TRANSACTION}
+                            onChange={
+                                (event: SelectChangeEvent) => {
+                                    this.setState({
+                                        transactionType: event.target.value as TransactionType
+                                    });
+                                }}
+                        >
+                            <MenuItem value={TransactionType.TRANSACTION}>Transaction</MenuItem>
+                            <MenuItem value={TransactionType.RECURRING}>Recurring</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <LocalizationProvider dateAdapter={DateAdapter}>
+                        <DatePicker
+                            label="Date"
+                            value={date}
+                            onChange={(newValue) => {this.setState({date: newValue || dayjs()})}}
+                            renderInput={(params) => <TextField {...params} />}/>
+                    </LocalizationProvider>
+                    <FormControl sx={{marginTop: '10px', marginBottom: '5px'}}>
+                        <InputLabel htmlFor="description">description</InputLabel>
+                        <OutlinedInput
+                            id="description"
+                            label="description"
+                            // startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                            value={this.state.description}
+                            onChange={(event => {
+                                this.setState({description: event.target.value});
+                            })}
+                        />
+                    </FormControl>
+                    <FormControl sx={{marginTop: '5px', marginBottom: '5px'}}>
+                        <InputLabel htmlFor="amount">amount</InputLabel>
+                        <OutlinedInput
+                            id="amount"
+                            label="amount"
+                            startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                            value={this.state.amount}
+                            onChange={(event => {
+                                this.setState({amount:event.target.value});
+                            })}
+                            inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                        />
+                    </FormControl>
+                    <Button variant="outlined" onClick={() => {this.onSubmit(this.state)}}>submit</Button>
+                    {/*{JSON.stringify(this.state)}*/}
+                </Paper>
             </Box>
         );
     }

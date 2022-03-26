@@ -50,11 +50,11 @@ class App extends React.Component<any, TransactionAppState> {
           <div className="App">
               <Box id="container" className="appContainer" sx={{
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(5, 1fr)',
+                  gridTemplateColumns: 'repeat(6, 1fr)',
                   gap: 1,
                   gridTemplateRows: 'auto',
-                  gridTemplateAreas: '"graph graph graph sidebar sidebar""table table table table table"'
-
+                  gridTemplateAreas: '"graph graph graph graph sidebar sidebar""table table table table table table"',
+                  padding: 3
               }}>
                   <Box sx={{gridArea: 'graph'}} className="graph">
                       <ChartVis/>

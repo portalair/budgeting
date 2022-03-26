@@ -115,7 +115,7 @@ class TransactionsTable extends React.Component<any> {
             page > 0 ? Math.max(0, (1 + page) * rowsPerPage - transactions.length) : 0;
 
         return (
-            <Box sx={{p: 2}}>
+            <Box>
                 <Paper sx={{width: '100%'}}>
                     <EnhancedTableToolbar numSelected={selected.length}/>
                     <TableContainer>
