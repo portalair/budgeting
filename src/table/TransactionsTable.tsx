@@ -117,7 +117,13 @@ class TransactionsTable extends React.Component<any> {
         return (
             <Box>
                 <Paper sx={{width: '100%'}}>
-                    <EnhancedTableToolbar numSelected={selected.length}/>
+                    <EnhancedTableToolbar
+                        numSelected={selected.length}
+                        delete={() => {
+                            this.props.delete(selected);
+                            this.setState({selected: []});
+                        }}
+                    />
                     <TableContainer>
                         <Table
                             sx={{ minWidth: 750}}
@@ -289,6 +295,7 @@ interface HeadCell {
 class EnhancedTableToolbar extends React.Component<EnhancedTableToolbarProps, any> {
     render() {
         const numSelected: number = this.props.numSelected;
+        const onDelete = this.props.delete;
 
         return (
             <Toolbar
@@ -323,7 +330,7 @@ class EnhancedTableToolbar extends React.Component<EnhancedTableToolbarProps, an
                 {numSelected > 0 ? (
                     <Tooltip title="Delete">
                         <IconButton>
-                            <DeleteIcon />
+                            <DeleteIcon onClick={onDelete} />
                         </IconButton>
                     </Tooltip>
                 ) : (
@@ -340,6 +347,7 @@ class EnhancedTableToolbar extends React.Component<EnhancedTableToolbarProps, an
 }
 
 interface EnhancedTableToolbarProps {
+    delete: () => void;
     numSelected: number;
 }
 

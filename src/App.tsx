@@ -25,6 +25,20 @@ class App extends React.Component<any, TransactionAppState> {
         };
     }
 
+    delete(transactions: Transaction[], selected: string[]) {
+        const newList = transactions.filter((transaction) => {
+            return selected.indexOf(this.getId(transaction)) == -1;
+        });
+        localStorage.setItem('transactions', JSON.stringify(newList));
+        this.setState({transactions: newList});
+
+    }
+
+    getId(transaction: Transaction): string {
+        return transaction.date.format() + ',' + transaction.description + ',' + transaction.amount;
+    }
+
+
     createTransaction(date:dayjs.Dayjs, description:string, amount:string): Transaction {
         return {
             transactionType: TransactionType.TRANSACTION,
@@ -39,7 +53,6 @@ class App extends React.Component<any, TransactionAppState> {
         transactions.push(transaction)
         localStorage.setItem('transactions', JSON.stringify(transactions));
         this.setState({transactions: transactions});
-        console.log(localStorage);
     }
 
 
@@ -72,7 +85,7 @@ class App extends React.Component<any, TransactionAppState> {
                         />
                   </Box>
                   <Box sx={{gridArea: 'table'}} className="table">
-                      <TransactionsTable transactions={transactions}/>
+                      <TransactionsTable transactions={transactions} delete={(selected: string[]) => this.delete(transactions, selected)}/>
                   </Box>
               </Box>
 
