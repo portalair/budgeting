@@ -177,7 +177,9 @@ class TransactionsTable extends React.Component<any> {
                                         );
                                     })}
                                 {emptyRows > 0 && (
-                                    <TableRow>
+                                    <TableRow style={{
+                                        height: (53) * emptyRows,
+                                    }}>
                                         <TableCell colSpan={6} />
                                     </TableRow>
                                 )}
