@@ -1,18 +1,17 @@
 import React, {useEffect, useRef} from "react";
 import {Box, Paper} from "@mui/material";
 import * as d3 from "d3";
+import dayjs from "dayjs";
 import Transaction from "../model/Transaction";
 
 class ChartVis extends React.Component<any> {
 
-    months = ['Jan', '']
 
     componentDidMount() {
         this.drawChart();
     }
 
     drawChart() {
-
         const transactions = this.props.transactions as Transaction[];
         transactions.sort((a,b) => {
             if(a.date.isBefore(b.date)) {
@@ -23,38 +22,45 @@ class ChartVis extends React.Component<any> {
         });
         const transactionsNew = d3.groups(this.props.transactions, (d: Transaction) => d.date.startOf('month').toDate())
 
-        console.log(transactionsNew);
-
         const margins = 20;
         const parentBox = d3.select("#target1").node() as HTMLElement;
         const width = parentBox.getBoundingClientRect().width;
         const height = parentBox.getBoundingClientRect().height;
 
-        const svg = d3.select("#target1").append("svg").attr("width", width-(margins*2)).attr("height", height - margins);
+        const svg = d3.select("#target1")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height - margins)
+            .attr("viewBox", [0, 0, width, height])
+            .attr("style", "width: auto; max-height: 100%;");
 
-        const X = d3.map(transactionsNew, d => d[0]);
+        svg.append("text")
+            .attr("x", width/2)
+            .attr("y", margins)
+            .attr("text-anchor", "middle")
+            .style("font-size", "16px")
+            .text("2022-2023")
+
         const Y = d3.map(transactionsNew, d => d3.sum(d[1], t => parseInt(t.amount, 10)));
 
-        //console.log(X, Y);
-
-        const xDomain = X;
+        const xDomain = [dayjs().startOf("year").toDate(), dayjs().startOf("year").add(11, "month").toDate()];
         const yDomain = [0, d3.max(Y) as number];
-        const xRange = [margins, width - margins*2];
+        const xRange = [margins, width - margins - margins];
         const yRange = [height - margins*2, margins]
 
         //console.log(yDomain);
 
         const xScale = d3.scaleTime(xDomain, xRange);
         const yScale = d3.scaleLinear(yDomain, yRange);
-        const xAxis = d3.axisBottom(xScale).tickSizeOuter(0);
+        const xAxis = d3.axisBottom(xScale);
         const yAxis = d3.axisLeft(yScale).ticks(height / 40);
 
         svg.append("g")
-            .attr("transform", `translate(25,0)`)
+            .attr("transform", `translate(15,0)`)
             .call(yAxis)
             .call(g => g.selectAll('.domain').remove())
             .call(g => g.selectAll(".tick line").clone()
-                .attr("x2", width - margins)
+                .attr("x2", width - margins*2)
                 .attr("stroke-opacity", 0.1))
 
         svg.append("g")
@@ -62,8 +68,8 @@ class ChartVis extends React.Component<any> {
             .selectAll("rect")
             .data(transactionsNew)
             .join("rect")
-            .attr("x", (i, num) => {
-                return 25+ (num*40);
+            .attr("x", (i) => {
+                return xScale(i[0]);
             })
             .attr("y", (i) => {
                 return yScale(d3.sum(i[1], a => parseInt(a.amount, 10)));
@@ -71,14 +77,13 @@ class ChartVis extends React.Component<any> {
             .attr("height", (i) => {
                 return yScale(0) - yScale(d3.sum(i[1], a => parseInt(a.amount, 10)));
             })
-            .attr("width", 20);
+            .attr("width", 20)
+            .attr("transform", `translate(0,0)`);
 
         svg.append("g")
-            .attr("transform", `translate(0,${height - margins*2})`)
+            .attr("transform", `translate(10,${height - (margins*2)})`)
             .call(xAxis);
     }
-
-
 
     render() {
         return (
