@@ -70,7 +70,7 @@ class App extends React.Component<any, TransactionAppState> {
                   padding: 3
               }}>
                   <Box sx={{gridArea: 'graph'}} className="graph">
-                      <ChartVis/>
+                      <ChartVis transactions={transactions}/>
                   </Box>
                   <Box sx={{gridArea: 'sidebar'}} className="add">
                     <Sidebar
